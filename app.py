@@ -1,7 +1,7 @@
 import mariadb
 import hashlib  # Pour hasher les mots de passe
-from flask import Flask, render_template, request, redirect, url_for, session
-
+from flask import Flask, render_template, redirect, url_for, session, jsonify
+import requests
 app = Flask(__name__)
 app.secret_key = "supersecretkey"  # Clé secrète pour gérer les sessions
 
@@ -30,9 +30,9 @@ def my_page():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form.get('pseudo')
-        password = request.form.get('password')
+    if requests.method == 'POST':
+        username = requests.form.get('pseudo')
+        password = requests.form.get('password')
 
         if not username or not password:
             return "Tous les champs sont obligatoires", 400
@@ -65,9 +65,9 @@ def login():
     return render_template('login.html')
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        username = request.form.get('pseudo')
-        password = request.form.get('password')
+    if requests.method == 'POST':
+        username = requests.form.get('pseudo')
+        password = requests.form.get('password')
 
         if not username or not password:
             return "Tous les champs sont obligatoires", 400
@@ -103,6 +103,28 @@ def register():
 def logout():
     session.pop('user', None)
     return redirect(url_for('login'))
+
+@app.route('/photo')
+def photo():
+   
+   return render_template('photo.html')
+
+
+PLANTNET_API_URL = "https://my-api.plantnet.org/v2/identify/all"
+API_KEY = "2b109nKsQens03DMaJ6mld1Bu"  # Remplace par ta clé API Pl@ntNet
+
+@app.route('/identify', methods=['POST'])
+def identify_plant():
+    if 'photo' not in requests.files:
+        return jsonify({"error": "Aucune image reçue"}), 400
+    
+    file = requests.files['photo']
+    
+    files = {"images": (file.filename, file.stream, file.mimetype)}
+    params = {"api-key": API_KEY}
+    
+    response = requests.post(PLANTNET_API_URL, files=files, params=params)
+    return response.json()
 
 if __name__ == '__main__':
     app.run(debug=True)
