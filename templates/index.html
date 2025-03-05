@@ -1,11 +1,73 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="UTF-8" />
-    <title>Accueil</title>
+    <meta charset="utf-8" />
+    <title>Jardin Connecté</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/home.css">
   </head>
   <body>
-    <h1>Bienvenue, {{ username }} !</h1>
-    <a href="{{ url_for('logout') }}">Déconnexion</a>
+    <div class="container">
+      <a href="https://www.google.com/maps/place/IUT+B%C3%A9ziers/@43.3468132,3.2118288,15z/data=!3m2!4b1!5s0x12b10e615ed57c51:0x2e2f98325528b8d8!4m6!3m5!1s0x12b10e615894e3f7:0x7da35d20f327636c!8m2!3d43.3468137!4d3.2221285!16s%2Fg%2F121d1s1n?entry=ttu&g_ep=EgoyMDI1MDIyNi4xIKXMDSoASAFQAw%3D%3D"><div class="carte">
+          <b><p class="rej">REJOIGNEZ</br>-NOUS POUR</br> LE GOÛTER </br>SAISONNIER </br>DU JARDIN</br> CONNECTÉ !</p>
+          <div class="infos">
+            <p>23/10 AU HALL DE </br>L'IUT DE BÉZIERS</p></b>
+            <img src="../static/images/basket.png" class="imaj">
+          </div></a>
+          </div>
+          <div class="der">
+            <b><p class="rej">N'OUBLIEZ PAS : </br> DERNIERE CHANCE POUR </br> VOS BOUTURES </br> D'AUTOMNE !</p></b>
+          </div>
+          <div class="ins">
+            <b><p class="rej">PENSEZ A SUIVRE LE </br> CLUB SUR INSTAGRAM </br>POUR RESTER </br>CONNECTÉ !</br> @graines-didee</p></b>
+            <img src="../static/images/insta.png" class="imaj">
+          </div>
+      </div>
+    </div>
+    <h3>Jardinière Connectée</h3>
+    <p>Consultez les plantes actuellement cultivées au sein de l'IUT.</p>
+    <div class="container">
+      <div class="jardin">
+        <div class="elements">
+          <img src="../static/images/pomme.png" class="ments">
+          <img src="../static/images/carotte.png" class="ments">
+        </div>
+        <div class="ele">
+          <img src="../static/images/fleur.png" class="ments">
+          <img src="../static/images/tulipe.png" class="ments">
+        </div>
+      </div>
+      <div class="jardin">
+        <div class="elements">
+          <img src="../static/images/bourgeon.png" class="ments">
+          <img src="../static/images/radis.png" class="ments">
+        </div>
+        <div class="ele">
+          <img src="../static/images/betterave.png" class="ments">
+          <img src="../static/images/weed.png" class="ments">
+        </div>
+      </div>
+      <div class="jardin">
+        <div class="elements">
+          <img src="../static/images/tomate.png" class="ments">
+          <img src="../static/images/carotte.png" class="ments">
+        </div>
+        <div class="ele">
+          <img src="../static/images/flower.png" class="ments">
+          <img src="../static/images/patate.png" class="ments">
+        </div>
+      </div>
+    </div>
+    <div class="fruits">
+        <!--trouver comment connecter la BDD et la mettre ici pour que quand on clique on ait le fruit qui corresponde-->
+    </div>
+    <div class="quest">
+      <h2>En quête du coin compost ?</h2>
+      <p>Trouvez les, retrouvez vous, et partagez des moments conviviaux !</p>
+      <div class="map">
+        <img src="../static/images/map.png" class="maps">
+        <img src="../static/images/baton.png" class="bat">
+        <img src="../static/images/fond.png" class="fon">
+      </div>
+    </div>
   </body>
 </html>
