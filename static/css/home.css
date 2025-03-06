@@ -1,0 +1,118 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.carte{
+    background-color: #0085C4;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.rej{
+    color: white;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px;
+}
+
+.infos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.imaj{
+    width: 160px;
+}
+
+.infos a {
+    color: white;
+}
+
+.der{
+    background-color: #DBA93A;
+    background-image: url("../images/main.png");
+    background-repeat: no-repeat;
+    background-size:75% 50%;
+    background-position: bottom;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.ins{
+    background-image: url("../images/fond.png");
+    background-size: 100% 100%;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.cont{
+    display: flex;
+    flex-direction: column;
+}
+
+.jardin{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.elements{
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+.container .jardin {
+    background-image: url("../images/fond2.png");
+    background-repeat: no-repeat;
+    background-size: 175px 200px;
+}
+
+.ments{
+    width: 60px;
+}
+
+.ele{
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    bottom: 50%;
+}
+
+.map{
+    background-color: #809C13;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.maps{
+    width: 250px;
+}
+
+.fon{
+    height: 100px;
+}
+
+.quest{
+    background-image: url("../images/fond.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.bat{
+    position: absolute;
+    top: 868px;
+    left: 17px;
+}

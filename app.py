@@ -6,7 +6,7 @@ import logging
 from functools import wraps
 from datetime import timedelta
 import os
-from werkzeug.utils import secure_filename
+from werkzeug.utils import secure_filename  
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = "supersecretkey"  
