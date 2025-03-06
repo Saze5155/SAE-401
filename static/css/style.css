@@ -1,1 +1,55 @@
-css
+/* 🌍 Global */
+body {
+  font-family: Arial, sans-serif;
+
+  color: white;
+  padding: 10px;
+}
+
+/* 🎠 Carrousel en scroll horizontal */
+.carousel-container {
+  overflow-x: auto; /* Permet le défilement horizontal */
+  white-space: nowrap;
+  scroll-snap-type: x mandatory; /* Scrolling fluide */
+  -webkit-overflow-scrolling: touch; /* Meilleur scroll sur iOS */
+  max-width: 100%;
+}
+
+.carousel {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+.carousel img {
+  width: 80%;
+  max-width: 300px;
+  border-radius: 10px;
+  scroll-snap-align: center; /* Chaque image s'aligne au centre */
+}
+
+/* 🌱 Jardin */
+.jardin-container {
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.jardin-grid {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.jardin-item img {
+  width: 100px;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* 🗺️ Plan du jardin */
+.plan-container {
+  background-image: url("../images/fond_plante_detail.png");
+  padding: 20px;
+  margin: -20px;
+}

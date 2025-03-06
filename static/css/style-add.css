@@ -1,0 +1,97 @@
+/* 🌿 Style général de la page */
+body {
+  font-family: "Arial", sans-serif;
+  background-image: url("../images/fond_plante_detail.png");
+  color: #333;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+/* 📋 Style du formulaire */
+form {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+/* 🌿 Titre */
+h1 {
+  font-size: 22px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+/* 🏷️ Labels */
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: left;
+}
+
+/* 📝 Inputs & Sélecteurs */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* 📜 Zone de texte */
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* 📸 Style du champ d'image */
+input[type="file"] {
+  border: none;
+  padding: 5px;
+  background-color: #f9f9f9;
+}
+
+/* 🎨 Bouton principal */
+button {
+  background-color: #6b8e23;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #56771a;
+}
+
+/* 🔙 Bouton retour */
+.back-button {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.back-button:hover {
+  color: #56771a;
+}

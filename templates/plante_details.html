@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ plante.nom }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-detail.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-menu.css') }}"
+    />
+  </head>
+  <body>
+    <div class="page-content">
+      <!-- 🔙 Bouton retour -->
+      <div class="back-button">
+        <a href="{{ url_for('flore', type_plante=plante.type) }}">⬅ Retour</a>
+      </div>
+
+      <!-- 🔹 En-tête de la plante -->
+      <div class="plante-header">
+        <h1>{{ plante.nom }}</h1>
+
+        <p class="scientific-name"><i>{{ plante.nom_scientifique }}</i></p>
+      </div>
+
+      <!-- 🌿 Image de la plante -->
+      <div class="plante-image-container">
+        <img
+          src="{{ url_for('static', filename=plante.image_url) }}"
+          alt="{{ plante.nom }}"
+        />
+      </div>
+
+      <!-- 🏷️ Icônes sous l'image -->
+      <div class="plante-icons">
+        <div style="display: flex; gap: 20px">
+          <img
+            src="{{url_for('static', filename='images/eau.png')}}"
+            alt="eau"
+          />
+          <img
+            src="{{url_for('static', filename='images/soin.png')}}"
+            alt="soin"
+          />
+          <img
+            src="{{url_for('static', filename='images/facile.png')}}"
+            alt="facile d'entretien"
+          />
+        </div>
+        <img
+          src="{{url_for('static', filename='images/cueill-plant.png')}}"
+          alt="cueillette et plantation"
+        />
+      </div>
+
+      <!-- 🗓️ Calendrier -->
+      <div class="calendar">
+        <div class="calendar-row">
+          {% for mois in ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N",
+          "D"] %}
+          <div
+            class="month {% if loop.index in plantation %}plantation{% else %}vide{% endif %}"
+          >
+            {{ mois }}
+          </div>
+          {% endfor %}
+        </div>
+        <div class="calendar-row">
+          {% for mois in ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N",
+          "D"] %}
+          <div
+            class="month {% if loop.index in cueillette %}cueillette{% else %}vide{% endif %}"
+          >
+            {{ mois }}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- 📖 Description -->
+      <div class="plante-description">
+        <p>{{ plante.description }}</p>
+      </div>
+
+      <!-- 📝 Conseils d’entretien -->
+      <div class="entretien-section">
+        <h2>Nos Conseils D’Entretien</h2>
+
+        <div class="entretien-item">
+          <div class="entretien-icon">
+            <img
+              src="{{ url_for('static', filename='images/sun.png') }}"
+              alt="Exposition"
+            />
+
+            <h3>Exposition</h3>
+          </div>
+          <div class="entretien-text">{{ plante.description_expo }}</div>
+        </div>
+
+        <div class="entretien-item">
+          <div class="entretien-icon">
+            <img
+              src="{{ url_for('static', filename='images/pluis.png') }}"
+              alt="Arrosage"
+            />
+
+            <h3>Arrosage</h3>
+          </div>
+          <div class="entretien-text">{{ plante.description_arro }}</div>
+        </div>
+      </div>
+    </div>
+    {% include 'menu.html' %}
+  </body>
+</html>

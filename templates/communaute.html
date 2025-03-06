@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Communauté</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-comm.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-menu.css') }}"
+    />
+  </head>
+  <body>
+    <div class="page-content">
+      <!-- 🌱 Section Club Graine -->
+      <section class="club-graine">
+        <div class="club-content">
+          <h1>Le Club Graine</h1>
+          <p>
+            Le jardin connecté de l'IUT, géré par notre club Graine réunissant
+            étudiants et enseignants, allie nature et technologie. Il offre des
+            jardinières pour cultiver et des espaces de détente pour se
+            ressourcer.
+          </p>
+          <p class="highlight">Ensemble, faisons grandir la biodiversité !</p>
+        </div>
+      </section>
+
+      <!-- 👥 Section Nos Pousses Prometteuses -->
+      <section class="pousses">
+        <h2>Nos Pousses Prometteuses</h2>
+
+        <div class="membres">
+          <img
+            src="{{ url_for('static', filename='images/maxime.png') }}"
+            alt="Maxime"
+            style="margin-top: 25px"
+          />
+          <div style="display: flex; gap: 15px">
+            <img
+              src="{{ url_for('static', filename='images/camille.png') }}"
+              alt="Camille"
+            />
+            <img
+              src="{{ url_for('static', filename='images/sophie.png') }}"
+              alt="sophie"
+            />
+          </div>
+        </div>
+        <img
+          src="{{ url_for('static', filename='images/partenaires.png') }}"
+          alt="Partenaires"
+          style="margin-top: 55px"
+        />
+      </section>
+    </div>
+    {% include 'menu.html' %}
+  </body>
+</html>

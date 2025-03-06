@@ -1,0 +1,63 @@
+<!-- 🌿 Barre de navigation sticky -->
+<div class="bottom-nav">
+  <a href="{{ url_for('my_page') }}" class="nav-item" id="nav-home">
+    <img
+      src="{{ url_for('static', filename='images/home.png') }}"
+      alt="Accueil"
+    />
+  </a>
+  <a href="{{ url_for('wiki') }}" class="nav-item" id="nav-wiki">
+    <img
+      style="width: 25px"
+      src="{{ url_for('static', filename='images/book.png') }}"
+      alt="Wiki"
+    />
+  </a>
+  <a
+    href="{{ url_for('communaute') }}"
+    class="nav-item active-icon"
+    id="nav-communaute"
+  >
+    <img
+      style="width: 37px"
+      src="{{ url_for('static', filename='images/fermier.png') }}"
+      alt="Photo"
+    />
+  </a>
+
+  <a href="{{ url_for('photo') }}" class="nav-item" id="nav-photo">
+    <img
+      style="width: 36px"
+      src="{{ url_for('static', filename='images/photo.png') }}"
+      alt="Photo"
+    />
+  </a>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const navItems = document.querySelectorAll(".nav-item");
+
+    // 🔍 Détecter la page active
+    const path = window.location.pathname;
+    navItems.forEach((item) => {
+      item.classList.remove("active-icon"); // Supprime les autres actives
+    });
+
+    if (path.includes("photo")) {
+      document.getElementById("nav-photo").classList.add("active-icon-nav");
+    } else if (path.includes("wiki")) {
+      document.getElementById("nav-wiki").classList.add("active-icon-nav");
+    } else if (path.includes("communaute")) {
+      document
+        .getElementById("nav-communaute")
+        .classList.add("active-icon-nav");
+    } else if (path.includes("flore")) {
+      document.getElementById("nav-wiki").classList.add("active-icon-nav");
+    } else if (path.includes("plante")) {
+      document.getElementById("nav-wiki").classList.add("active-icon-nav");
+    } else {
+      document.getElementById("nav-home").classList.add("active-icon-nav");
+    }
+  });
+</script>

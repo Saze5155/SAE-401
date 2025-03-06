@@ -1,0 +1,85 @@
+/* 🌿 Barre de navigation sticky */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  background: #6b8e23;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 10px;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Icônes normales */
+.nav-item {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.nav-item img {
+  width: 41px;
+  height: auto;
+  opacity: 0.6;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* ✨ Icône active avec animation plus douce */
+.active-icon-nav {
+  position: relative;
+}
+
+.active-icon-nav img {
+  opacity: 1;
+  width: 40px; /* Légère augmentation */
+  transform: scale(1.2);
+  animation: fadeInScale 0.3s ease-out;
+}
+
+/* 🌟 Animation d'apparition fluide */
+@keyframes fadeInScale {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* 🌕 Cercle progressif autour de l'icône active */
+.active-icon-nav::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  background: rgba(107, 142, 35, 0.3);
+  border-radius: 50%;
+  z-index: -1;
+  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  animation: popCircle 0.3s ease-in-out;
+}
+
+/* 🟢 Animation d'apparition du cercle */
+@keyframes popCircle {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.page-content {
+  padding-bottom: 60px; /* Ajuste en fonction de la hauteur du menu */
+}

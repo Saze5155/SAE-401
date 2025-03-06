@@ -1,0 +1,152 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f3ef;
+  color: #3d2e1e;
+  margin: 0;
+  padding: 20px;
+}
+
+/* 🔙 Bouton retour */
+.back-button a {
+  font-size: 16px;
+  text-decoration: none;
+  color: #7a9c3b;
+  font-weight: bold;
+}
+
+/* 🔹 Titre et image de la plante */
+.plante-header {
+  text-align: center;
+  padding: 10px;
+}
+
+.plante-header h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.scientific-name {
+  font-style: italic;
+  color: #777;
+}
+
+/* 🌿 Image de la plante */
+.plante-image-container {
+  background-color: #718a13;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.plante-image-container img {
+  width: 100%;
+  max-width: 150px;
+}
+
+/* 🏷️ Icônes sous l'image */
+.plante-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.plante-icons div {
+  background-color: #718a13;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #7a9c3b;
+}
+
+/* 🗓️ Calendrier */
+.calendar {
+  display: flex;
+  justify-content: center;
+
+  margin: 15px 0;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-row {
+  display: flex;
+}
+
+.month {
+  width: 25px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: white;
+}
+
+/* 🌱 Mois actifs */
+.plantation {
+  background-color: #dba053;
+  color: white;
+}
+
+.cueillette {
+  background-color: #9b7653;
+  color: white;
+}
+
+/* 📖 Description */
+.plante-description {
+  padding: 20px;
+  text-align: justify;
+}
+
+.plante-description p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* 📝 Conseils d’entretien */
+.entretien-section {
+  background-image: url("../images/fond_plante_detail.png");
+
+  padding: 20px;
+  margin: -20px;
+  color: white;
+  margin-top: 20px;
+  padding-bottom: 60px;
+}
+
+.entretien-section h2 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.entretien-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.entretien-item img {
+  width: 30px;
+}
+.entretien-icon {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.entretien-text {
+  font-size: 14px;
+}

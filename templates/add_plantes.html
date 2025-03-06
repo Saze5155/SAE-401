@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajouter une Plante</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-add.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Ajouter une Plante</h1>
+
+    <form
+      action="{{ url_for('add_plante') }}"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <label for="nom">Nom :</label>
+      <input type="text" id="nom" name="nom" required />
+
+      <label for="nom_scientifique">Nom scientifique :</label>
+      <input
+        type="text"
+        id="nom_scientifique"
+        name="nom_scientifique"
+        required
+      />
+
+      <label for="type">Type :</label>
+      <select id="type" name="type" required>
+        <option value="Plantes Grasses">Plante Grasse</option>
+        <option value="Arbres Fruiters">Arbre Fruiter</option>
+        <option value="Fleurs">Fleurs</option>
+        <option value="Legumes">Légumes</option>
+      </select>
+
+      <label for="exposition">Exposition :</label>
+      <select id="exposition" name="exposition" required>
+        <option value="Plein Soleil">Plein Soleil</option>
+        <option value="Mi-Ombre">Mi-Ombre</option>
+      </select>
+
+      <label for="entretien">Entretien :</label>
+      <select id="entretien" name="entretien" required>
+        <option value="Facile">Facile</option>
+        <option value="Modéré">Modéré</option>
+        <option value="Difficile">Difficile</option>
+      </select>
+
+      <label for="description">Description :</label>
+      <textarea id="description" name="description" required></textarea>
+
+      <label for="description_expo">Description Exposition :</label>
+      <textarea
+        id="description_expo"
+        name="description_expo"
+        required
+      ></textarea>
+
+      <label for="description_arro">Description Arrosage :</label>
+      <textarea
+        id="description_arro"
+        name="description_arro"
+        required
+      ></textarea>
+      <label for="image">Image :</label>
+      <input type="file" id="image" name="image" accept="image/*" required />
+
+      <button type="submit">Ajouter</button>
+    </form>
+
+    <a href="{{ url_for('flore') }}" class="back-button">⬅ Retour</a>
+  </body>
+</html>

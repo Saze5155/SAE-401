@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apprentissage</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-wiki.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-menu.css') }}"
+    />
+  </head>
+  <body>
+    <div class="page-content">
+      <!-- 🌱 Section Biodiversité -->
+      <section class="biodiversite">
+        <h1>La Biodiversité</h1>
+        <p>Un trésor à préserver et à cultiver ensemble !</p>
+
+        <div class="video-container">
+          <img
+            src="{{ url_for('static', filename='images/video.png') }}"
+            alt="Vidéo Biodiversité"
+          />
+        </div>
+      </section>
+
+      <!-- 📚 Section Wiki -->
+      <section class="wiki">
+        <h2>WIKI</h2>
+        <p>Un coin pour apprendre et se renseigner.</p>
+
+        <div class="wiki-buttons">
+          <a href="#" class="wiki-button faune"
+            ><img
+              src="{{ url_for('static', filename='images/faune.png') }}"
+              alt="faune"
+          /></a>
+          <a href="{{ url_for('flore') }}" class="wiki-button flore"
+            ><img
+              src="{{ url_for('static', filename='images/flore.png') }}"
+              alt="flore"
+          /></a>
+        </div>
+      </section>
+
+      <!-- 🤝 Section Aider en 3 étapes -->
+      <section class="aider">
+        <h2>Aider en 3 étapes !</h2>
+
+        <div class="help-steps">
+          <img
+            src="{{ url_for('static', filename='images/projet.png') }}"
+            alt="projet"
+          />
+          <img
+            src="{{ url_for('static', filename='images/compost.png') }}"
+            alt="compost"
+          />
+          <img
+            src="{{ url_for('static', filename='images/reseaux.png') }}"
+            alt="resaux"
+          />
+        </div>
+      </section>
+    </div>
+    {% include 'menu.html' %}
+  </body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flore</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-menu.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-flore.css') }}"
+    />
+  </head>
+  <body>
+    <div class="page-content">
+      <!-- Barre de recherche et bouton Filtres -->
+      <div class="search-container">
+        <div class="search-bar">
+          <input type="text" id="search-input" placeholder="Recherche" />
+          <button style="background: none" id="search-btn">
+            <img
+              src="{{ url_for('static', filename='images/loupe.png') }}"
+              alt="loupe"
+            />
+          </button>
+          <button id="toggle-filters">Filtres</button>
+        </div>
+        <div id="active-filters" class="active-filters-container"></div>
+
+        <!-- Fenêtre des filtres (cachée par défaut) -->
+        <div class="filters-panel" id="filters-panel">
+          <div class="filters-header">
+            <h2 style="color: black">Tous les filtres</h2>
+            <button id="close-filters" class="close-btn">&#10005;</button>
+          </div>
+          <hr />
+          <div class="filters-body">
+            <label>Type de plante :</label>
+            <div class="filter-options">
+              <button class="filter-btn" data-type="Plantes Grasses">
+                Plantes Grasses
+              </button>
+              <button class="filter-btn" data-type="Arbres Fruitiers">
+                Arbres Fruitiers
+              </button>
+              <button class="filter-btn" data-type="Fleurs">Fleurs</button
+              ><button class="filter-btn" data-type="Legumes">Légumes</button>
+            </div>
+
+            <label>Exposition :</label>
+            <div class="filter-options">
+              <button class="filter-btn" data-exposition="Plein Soleil">
+                Plein Soleil
+              </button>
+              <button class="filter-btn" data-exposition="Mi-Ombre">
+                Mi-ombre
+              </button>
+            </div>
+
+            <label>Entretien :</label>
+            <div class="filter-options">
+              <button class="filter-btn" data-entretien="Facile">Facile</button>
+              <button class="filter-btn" data-entretien="Modéré">Modéré</button>
+              <button class="filter-btn" data-entretien="Difficile">
+                Difficile
+              </button>
+            </div>
+          </div>
+          <hr />
+          <div class="filters-footer">
+            <button id="apply-filters">Appliquer les filtres</button>
+            <button id="cancel-filters">Annuler</button>
+          </div>
+        </div>
+      </div>
+      <div class="plantes-container">
+        {% for type_plante, plantes in plantes_par_type.items() %}
+        <h2>{{ type_plante }}</h2>
+        <div class="plante-grid">
+          {% for plante in plantes %}
+          <a
+            href="{{ url_for('plante_details', plante_id=plante.id) }}"
+            class="plante-card"
+          >
+            <img
+              src="{{ url_for('static', filename=plante.image_url) }}"
+              alt="{{ plante.nom }}"
+            />
+            <h3>{{ plante.nom }}</h3>
+          </a>
+          {% endfor %}
+        </div>
+        {% endfor %} {% if session['role'] == 1 %}
+        <a href="{{ url_for('add_plante') }}" class="add-button">+</a>
+        {% endif %}
+      </div>
+    </div>
+    {% include 'menu.html' %}
+
+    <script src="{{ url_for('static', filename='js/filtre.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+/* 🔹 Style global */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #3d2e1e;
+}
+
+/* 🌱 Section Biodiversité */
+.biodiversite {
+  background-color: #90b012;
+  color: white;
+
+  padding: 20px;
+}
+
+.biodiversite h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.biodiversite p {
+  font-size: 16px;
+}
+
+.video-container {
+  position: relative;
+  width: 80%;
+  max-width: 300px;
+  margin: 20px auto;
+}
+
+.video-container img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* 📚 Section Wiki */
+.wiki {
+  background-color: #90b012;
+
+  padding: 20px;
+  color: white;
+}
+
+.wiki h2 {
+  font-size: 22px;
+}
+
+.wiki-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* 🤝 Section Aider en 3 étapes */
+.aider {
+  background-image: url("../images/fond_plante_detail.png");
+  padding: 20px;
+
+  color: white;
+}
+
+.aider h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.help-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

@@ -1,30 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Prendre une Photo</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-cam.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-menu.css') }}"
+    />
   </head>
   <body>
-    <input type="file" id="photoInput" accept="image/*" capture="environment" />
-    <button onclick="uploadPhoto()">Envoyer</button>
+    <div class="page-content">
+      <!-- 📷 Zone Caméra / Photo -->
+      <div class="photo-container">
+        <video id="camera" autoplay playsinline></video>
+        <canvas id="photo-canvas"></canvas>
+        <img id="captured-photo" alt="Photo prise" />
+      </div>
 
-    <img id="preview" style="max-width: 100%; display: none" />
+      <!-- 📸 Bouton Capture -->
+      <button id="capture-btn">●</button>
 
-    <script>
-      document
-        .getElementById("photoInput")
-        .addEventListener("change", function (event) {
-          const file = event.target.files[0];
-          if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-              document.getElementById("preview").src = e.target.result;
-              document.getElementById("preview").style.display = "block";
-            };
-            reader.readAsDataURL(file);
-          }
-        });
-    </script>
+      <!-- 🔄 Bouton Recommencer -->
+      <button id="retry-btn">↺</button>
+      <!-- Pop-up résultat -->
+      <div id="popup">
+        <div class="popup-content">
+          <span id="close-popup">&times;</span>
+          <h2>Résultat de l'analyse</h2>
+          <p id="result"></p>
+          <button id="details-btn">Voir la fiche</button>
+        </div>
+      </div>
+    </div>
+    {% include 'menu.html' %}
+    <script src="{{ url_for('static', filename='js/camera.js') }}"></script>
   </body>
 </html>

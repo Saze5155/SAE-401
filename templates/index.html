@@ -2,10 +2,73 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Accueil</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-menu.css') }}"
+    />
   </head>
   <body>
-    <h1>Bienvenue, {{ username }} !</h1>
-    <a href="{{ url_for('logout') }}">Déconnexion</a>
+    <div class="page-content">
+      <!-- 🎠 Carrousel 1 (scroll horizontal) -->
+      <div class="carousel-container">
+        <div class="carousel">
+          <img
+            src="{{ url_for('static', filename='images/event1.png') }}"
+            alt="Slide 1"
+          />
+          <img
+            src="{{ url_for('static', filename='images/event2.png') }}"
+            alt="Slide 2"
+          />
+          <img
+            src="{{ url_for('static', filename='images/event3.png') }}"
+            alt="Slide 3"
+          />
+        </div>
+      </div>
+
+      <!-- 🌱 Jardin Connecté -->
+      <section class="jardin-container">
+        <h2 style="color: #718a13">Jardinière Connectée</h2>
+        <p style="color: #926d4a">
+          Consultez les plantes actuellement cultivées au sein de l'IUT.
+        </p>
+        <!-- 🎠 Carrousel 2 -->
+        <div class="carousel-container">
+          <div class="carousel">
+            <img
+              src="{{ url_for('static', filename='images/jardin.png') }}"
+              alt="Slide 1"
+            />
+            <img
+              src="{{ url_for('static', filename='images/jardin.png') }}"
+              alt="Slide 2"
+            />
+            <img
+              src="{{ url_for('static', filename='images/jardin.png') }}"
+              alt="Slide 3"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- 🗺️ Plan du Jardin -->
+      <section class="plan-container">
+        <h2>En quête du coin compost ?</h2>
+        <p>Trouvez-les, retrouvez-vous, et partagez des moments conviviaux !</p>
+        <img
+          src="{{ url_for('static', filename='images/plan.png') }}"
+          alt="Plan du jardin"
+        />
+      </section>
+    </div>
+    {% include 'menu.html' %}
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
   </body>
 </html>
