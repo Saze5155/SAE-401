@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -43,18 +42,79 @@
         <!-- 🎠 Carrousel 2 -->
         <div class="carousel-container">
           <div class="carousel">
-            <img
-              src="{{ url_for('static', filename='images/jardin.png') }}"
-              alt="Slide 1"
-            />
-            <img
-              src="{{ url_for('static', filename='images/jardin.png') }}"
-              alt="Slide 2"
-            />
-            <img
-              src="{{ url_for('static', filename='images/jardin.png') }}"
-              alt="Slide 3"
-            />
+            {% for jardin in jardins %}
+            <div class="jardin-container">
+              <img
+                src="{{ url_for('static', filename='images/jardin.png') }}"
+                alt="{{ jardin.nom }}"
+                class="jardin-img"
+              />
+
+              {% for plante in jardin.plantes %}
+              <img
+                src="{{ url_for('static', filename='images/icons/icon-{}.png'.format(plante.nom.lower().replace(' ', '-'))) }}"
+                class="plant-icon"
+                data-x="{{ plante.position_x }}"
+                data-y="{{ plante.position_y }}"
+                data-nom="{{ plante.nom }}"
+                data-id="{{ plante.id }}"
+              />
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Fenêtre d'information des plantes -->
+        <div id="info-box">
+          <div class="info-content">
+            <div
+              style="
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+              "
+            >
+              <div style="display: flex; flex-direction: column">
+                <h2 id="info-title" style="margin-bottom: -11px"></h2>
+                <p id="info-scientifique"></p>
+              </div>
+              <img
+                src="{{url_for('static', filename='images/cueill-plant.png')}}"
+                alt="cueillette et plantation"
+              />
+            </div>
+            <div
+              style="
+                background-color: #718a13;
+                padding: 10px;
+                border-radius: 15px;
+              "
+            >
+              <div class="calendar">
+                <div class="calendar-row">
+                  {% for i in range(1, 13) %}
+                  <div
+                    class="month {% if i in plantation %}plantation{% else %}vide{% endif %}"
+                  >
+                    {{ ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N",
+                    "D"][i-1] }}
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="calendar-row">
+                  {% for i in range(1, 13) %}
+                  <div
+                    class="month {% if i in cueillette %}cueillette{% else %}vide{% endif %}"
+                  >
+                    {{ ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N",
+                    "D"][i-1] }}
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -70,6 +130,6 @@
       </section>
     </div>
     {% include 'menu.html' %}
-    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
   </body>
 </html>

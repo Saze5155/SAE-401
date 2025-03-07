@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Futur Jardin</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-menu.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-vote.css') }}"
+    />
+  </head>
+  <body>
+    {% if session["role"] == 1 %}
+    <section class="admin-panel">
+      <h2>Gestion du Vote</h2>
+
+      <form id="vote-form">
+        <label for="jardin">Choisir un Jardin :</label>
+        <select id="jardin" name="jardin">
+          {% for jardin in jardins %}
+          <option value="{{ jardin.id }}">{{ jardin.nom }}</option>
+          {% endfor %}
+        </select>
+        <br />
+        <label for="duree">Durée du Vote (en minutes) :</label>
+        <input type="number" id="duree" name="duree" min="1" required />
+        <br />
+        <button type="submit">Lancer le Vote</button>
+      </form>
+
+      <h3>Votes en Cours</h3>
+      <div id="vote-status">
+        <p>Chargement...</p>
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="jardin-container">
+      <h2>Le Futur Jardin</h2>
+      <p>
+        Choisissez les arbres, fleurs, fruits et légumes pour la prochaine
+        saison, cliquez sur '+', validez, et patientez.
+      </p>
+      <h3 id="countdown">Chargement du temps restant...</h3>
+
+      <div class="jardin">
+        <img
+          src="{{ url_for('static', filename='images/jardin.png') }}"
+          class="jardin-img"
+          alt="Jardin"
+        />
+
+        <!-- Emplacements de plantation -->
+
+        <img
+          src="{{ url_for('static', filename='images/icons/icon-plus.png') }}"
+          alt="Ajouter une plante"
+          class="plant-slot"
+          data-slot="1"
+          style="top: 10%; left: 15%"
+        />
+
+        <img
+          src="{{ url_for('static', filename='images/icons/icon-plus.png') }}"
+          alt="Ajouter une plante"
+          class="plant-slot"
+          data-slot="2"
+          style="top: 10%; right: 15%"
+        />
+
+        <img
+          src="{{ url_for('static', filename='images/icons/icon-plus.png') }}"
+          alt="Ajouter une plante"
+          class="plant-slot"
+          data-slot="3"
+          style="bottom: 10%; left: 15%"
+        />
+
+        <img
+          src="{{ url_for('static', filename='images/icons/icon-plus.png') }}"
+          alt="Ajouter une plante"
+          class="plant-slot"
+          data-slot="4"
+          style="bottom: 10%; right: 15%"
+        />
+      </div>
+
+      <img
+        id="validate-vote"
+        src="{{url_for('static', filename='images/valider.png')}}"
+        alt="Valider le vote"
+        style="visibility: hidden"
+      />
+    </section>
+    <div id="plant-selection" class="hidden">
+      <h3 style="color: black">Choisissez une plante</h3>
+      <div class="plant-list">
+        {% for plante in plantes %}
+        <button class="plant-option" data-plant-id="{{ plante.id }}">
+          <img
+            src="{{ url_for('static', filename='images/icons/icon-' ~ plante.nom|lower|replace(' ', '-') ~ '.png') }}"
+            alt="{{ plante.nom }}"
+          />
+        </button>
+        {% endfor %}
+      </div>
+    </div>
+    <img
+      id="vote-result-img"
+      src="{{url_for('static', filename='images/good.png')}}"
+      alt="Résultat du vote"
+      style="width: 300px"
+    />
+
+    {% include 'menu.html' %}
+
+    <script src="{{ url_for('static', filename='js/vote.js') }}"></script>
+  </body>
+</html>

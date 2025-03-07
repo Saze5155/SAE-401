@@ -58,6 +58,14 @@
         />
       </section>
     </div>
+    <a href="{{ url_for('vote') }}" class="floating-button">
+      <img
+        src="{{ url_for('static', filename='images/home.png') }}"
+        alt="Jardin"
+        style="padding-left: 5px"
+      />
+    </a>
+
     {% include 'menu.html' %}
   </body>
 </html>

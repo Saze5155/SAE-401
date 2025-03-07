@@ -22,7 +22,6 @@ body {
 }
 
 .carousel img {
-  width: 80%;
   max-width: 300px;
   border-radius: 10px;
   scroll-snap-align: center; /* Chaque image s'aligne au centre */
@@ -30,21 +29,74 @@ body {
 
 /* 🌱 Jardin */
 .jardin-container {
-  margin: 20px 0;
-  padding: 20px;
-  border-radius: 10px;
+  position: relative;
 }
 
-.jardin-grid {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 10px;
-}
-
-.jardin-item img {
-  width: 100px;
+.jardin-img {
   height: auto;
+  padding: 0px 50px 50px 50px;
+}
+
+.plant-icon {
+  position: absolute;
+
+  height: 60px;
+  cursor: pointer;
+}
+
+/* Fenêtre d'information */
+#info-box {
+  display: none; /* Masqué par défaut */
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.info-content {
+  background: #809c13;
+  color: white;
+  padding: 15px;
   border-radius: 10px;
+}
+
+#info-box.visible {
+  display: block;
+}
+
+.calendar {
+  display: flex;
+  justify-content: center;
+
+  margin: 15px 0;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-row {
+  display: flex;
+}
+
+.month {
+  width: 25px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  background-color: white;
+}
+
+/* 🌱 Mois actifs */
+.plantation {
+  background-color: #dba053;
+  color: white;
+}
+
+.cueillette {
+  background-color: #9b7653;
+  color: white;
 }
 
 /* 🗺️ Plan du jardin */

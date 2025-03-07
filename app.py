@@ -7,6 +7,10 @@ from functools import wraps
 from datetime import timedelta
 import os
 from werkzeug.utils import secure_filename  
+import datetime
+import threading
+import time
+
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = "supersecretkey"  
@@ -66,7 +70,57 @@ def admin_required(f):
 def my_page():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    return render_template('index.html', username=session['username'], role=session['role'])
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Récupérer les jardins
+    cursor.execute("SELECT * FROM jardins")
+    jardins = cursor.fetchall()
+
+    # Associer les plantes à chaque jardin
+    for jardin in jardins:
+        cursor.execute("""
+            SELECT p.id, p.nom, jp.position_x, jp.position_y
+            FROM plantes p
+            JOIN jardin_plantes jp ON p.id = jp.plante_id
+            WHERE jp.jardin_id = %s
+        """, (jardin["id"],))
+        jardin["plantes"] = cursor.fetchall()
+
+    conn.close()
+    return render_template('index.html', username=session['username'], role=session['role'], jardins=jardins)
+
+@app.route('/plante_info/<int:plante_id>')
+def plante_info(plante_id):
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("SELECT id, nom, nom_scientifique, description FROM plantes WHERE id = %s", (plante_id,))
+        plante = cursor.fetchone()
+
+        if not plante:
+            return jsonify({"error": "Plante non trouvée"}), 404
+
+        # Vérifier si `nom_scientifique` existe bien
+        if 'nom_scientifique' not in plante:
+            plante["nom_scientifique"] = "Nom scientifique inconnu"
+
+        cursor.execute("SELECT mois_id, type FROM plantes_mois WHERE plante_id = %s", (plante_id,))
+        mois_associes = cursor.fetchall()
+
+        plantation = [m['mois_id'] for m in mois_associes if m['type'] == 'plantation']
+        cueillette = [m['mois_id'] for m in mois_associes if m['type'] == 'cueillette']
+
+        conn.close()
+
+        return jsonify({
+            "id": plante["id"],
+            "nom": plante["nom"],
+            "nom_scientifique": plante["nom_scientifique"],
+            "description": plante["description"],
+            "plantation": plantation,
+            "cueillette": cueillette
+        })
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -155,12 +209,92 @@ def photo():
 def wiki():
    return render_template('wiki.html')
 
+@app.route('/vote')
+@login_required
+def vote():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Récupérer toutes les plantes
+    cursor.execute("SELECT id, nom FROM plantes")
+    plante_list = cursor.fetchall()
+    cursor.execute("SELECT id, nom FROM jardins")
+    jardin_list = cursor.fetchall()
+
+    conn.close()
+
+    return render_template('vote.html', plantes=plante_list, jardins=jardin_list)
+
+@app.route('/vote-register', methods=['POST'])
+@login_required
+def vote_register():
+    data = request.json
+    user_id = session["user_id"]
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Vérifier si le vote est encore en cours
+    cursor.execute("SELECT fin_vote FROM vote_session ORDER BY id DESC LIMIT 1")
+    vote_session = cursor.fetchone()
+   
+
+    # Enregistrer le vote de l'utilisateur
+    for slot, plante_id in data["votes"].items():
+        cursor.execute("""
+            INSERT INTO vote (user_id, jardin_id, slot, plante_id) 
+            VALUES (%s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE plante_id = VALUES(plante_id)
+        """, (user_id, 1, slot, plante_id))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"success": True})
+
+
+@app.route('/temps_restant')
+def temps_restant():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT fin_vote FROM vote_session ORDER BY fin_vote DESC LIMIT 1")
+    vote = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if vote:
+        return jsonify({"fin_vote": vote["fin_vote"].isoformat()})  # Convertit la date en format JSON
+    else:
+        return jsonify({"error": "Aucun vote en cours"}), 404
+
+from datetime import datetime
+
+@app.route('/check-vote')
+def check_vote():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Vérifier si un vote est en cours
+    cursor.execute("""
+        SELECT * FROM vote_session 
+        WHERE NOW() < fin_vote
+        LIMIT 1
+    """)
+    vote = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({"active": bool(vote)})  # Renvoie True si un vote est actif, sinon False
+
+
+
 @app.route('/communaute')
 @login_required
 def communaute():
    return render_template('communaute.html')
-
-
 
 @app.route('/flore', methods=['GET'])
 @login_required
@@ -245,6 +379,9 @@ def plante_details(plante_id):
     cueillette = [m['mois_id'] for m in mois_associes if m['type'] == 'cueillette']
 
     return render_template('plante_details.html', plante=plante, plantation=plantation, cueillette=cueillette)
+
+ # Assurez-vous que la page est correcte
+
 
 
 PLANTNET_API_URL = "https://my-api.plantnet.org/v2/identify/all"
@@ -347,6 +484,96 @@ def add_plante():
 
     return render_template("add_plantes.html")
 
+@app.route('/admin/start_vote', methods=['POST'])
+@admin_required
+def start_vote():
+    data = request.json
+    jardin_id = data.get("jardin")
+    duree = data.get("duree")
+
+    # Calculer l'heure de fin du vote
+    fin_vote = datetime.now() + timedelta(minutes=int(duree))
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Enregistrer la date de fin du vote
+    cursor.execute("""
+        INSERT INTO vote_session (jardin_id, fin_vote) 
+        VALUES (%s, %s)
+        ON DUPLICATE KEY UPDATE fin_vote = VALUES(fin_vote)
+    """, (jardin_id, fin_vote))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"success": True, "message": "Vote lancé avec succès !"})
+
+
+
+@app.route('/admin/get_votes')
+@admin_required
+def get_votes():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+   
+    cursor.execute("""
+        SELECT v.slot, p.nom, COUNT(*) as votes 
+        FROM vote v
+        JOIN plantes p ON v.plante_id = p.id
+        GROUP BY v.slot, p.nom
+        ORDER BY votes DESC
+    """)
+    votes = cursor.fetchall()
+
+    conn.close()
+    return jsonify(votes)
+
+
+def check_vote_in_background():
+    """Vérifie toutes les 10 secondes si un vote est terminé et applique les résultats."""
+    while True:
+        time.sleep(10)  # Vérifie toutes les 10 secondes
+
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        # Vérifier si un vote est terminé
+        cursor.execute("SELECT * FROM vote_session WHERE fin_vote < NOW()")
+        vote_termine = cursor.fetchone()
+
+        if vote_termine:
+            print("🔔 Vote terminé ! Application des résultats...")
+
+            # Récupérer les votes gagnants par slot
+            cursor.execute("""
+                SELECT slot, plante_id, COUNT(*) as vote_count
+                FROM vote
+                GROUP BY slot, plante_id
+                ORDER BY slot, vote_count DESC
+            """)
+            gagnants = cursor.fetchall()
+
+            for gagnant in gagnants:
+                cursor.execute("""
+                    UPDATE jardin_plantes 
+                    SET plante_id = %s 
+                    WHERE jardin_id = %s AND slot = %s
+                """, (gagnant["plante_id"], vote_termine["jardin_id"], gagnant["slot"]))
+
+            # Supprimer les votes après mise à jour
+            cursor.execute("DELETE FROM vote")
+            cursor.execute("DELETE FROM vote_session")
+            conn.commit()
+
+            print("✅ Vote appliqué et votes supprimés.")
+
+        cursor.close()
+        conn.close()
+
+# Lancer la vérification en arrière-plan
+vote_checker_thread = threading.Thread(target=check_vote_in_background, daemon=True)
+vote_checker_thread.start()
 
 if __name__ == '__main__':
     app.run(debug=True)

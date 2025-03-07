@@ -1,0 +1,75 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #90b012;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+.jardin-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.jardin {
+  position: relative;
+  display: inline-block;
+}
+.jardin-img {
+  width: 100%;
+  max-width: 400px;
+}
+.plant-slot {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+}
+#plant-selection {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  display: none; /* Au lieu de hidden */
+  transition: transform 0.3s ease-in-out;
+  position: absolute;
+  top: 40%;
+  left: 0;
+}
+
+#plant-selection.visible {
+  display: block;
+  transform: translateY(0);
+}
+
+#plant-selection.hidden {
+  transform: translateY(100%);
+}
+.plant-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  height: 110px;
+  overflow-x: auto;
+}
+.plant-option {
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: center;
+}
+.plant-option img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #ffcc80;
+  padding: 5px;
+}
+#vote-result-img {
+  display: none;
+  margin: 20px auto;
+  border-radius: 10px;
+}
+#vote-result-img.visible {
+  display: block;
+}
