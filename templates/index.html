@@ -12,6 +12,15 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style-menu.css') }}"
     />
+    <link
+      rel="manifest"
+      href="{{ url_for('static', filename='manifest.json') }}"
+    />
+    <meta name="theme-color" content="#4CAF50" />
+    <link
+      rel="apple-touch-icon"
+      href="{{ url_for('static', filename='images/icons/icon-192x192.png') }}"
+    />
   </head>
   <body>
     <div class="page-content">
@@ -131,5 +140,20 @@
     </div>
     {% include 'menu.html' %}
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/static/service-worker.js")
+          .then((registration) => {
+            console.log(
+              "Service Worker enregistré avec succès :",
+              registration
+            );
+          })
+          .catch((error) => {
+            console.log("Échec de l'enregistrement du Service Worker :", error);
+          });
+      }
+    </script>
   </body>
 </html>
